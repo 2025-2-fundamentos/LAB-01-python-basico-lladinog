@@ -6,6 +6,9 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from pprint import pprint
+
+
 def pregunta_10():
     """
     Retorne una lista de tuplas contengan por cada tupla, la letra de la
@@ -20,3 +23,16 @@ def pregunta_10():
 
 
     """
+    lines = []
+    with open ("files/input/data.csv", "r", encoding="utf-8") as f:
+        for line in f:
+            lines.append(line)
+    
+    columns = list(map(lambda line: line.split('\t'), lines))
+    columns1_4_5 = list(map(lambda column: (column[0], 
+                                            len(column[3].split(',')), 
+                                            len(column[4].replace("\n", "").split(','))), columns))
+    
+    return columns1_4_5
+
+pregunta_10()
