@@ -1,10 +1,11 @@
-"""
+""""
 Escriba el codigo que ejecute la accion solicitada en cada pregunta. Los
 datos requeridos se encuentran en el archivo data.csv. En este laboratorio
 solo puede utilizar las funciones y librerias basicas de python. No puede
 utilizar pandas, numpy o scipy.
 """
 
+from datetime import datetime
 
 def pregunta_04():
     """
@@ -26,3 +27,23 @@ def pregunta_04():
      ('12', 3)]
 
     """
+
+    lines = []
+    with open ("files/input/data.csv", "r", encoding="utf-8") as f:
+        for line in f:
+            lines.append(line)
+    
+    columns = list(map(lambda line: line.split('\t'), lines))
+    dates = list(map(lambda column: column[2], columns))
+    months = sorted(list(map(lambda date: date.split('-')[1], dates)))
+    
+    result = []
+    for x in months:
+        if result and result[-1][0] == x:
+            result[-1] = (x, result[-1][1] + 1) 
+        else:
+            result.append((x, 1))
+    
+    return sorted(result)
+    
+pregunta_04()
