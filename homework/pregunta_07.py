@@ -6,6 +6,9 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from pprint import pprint
+
+
 def pregunta_07():
     """
     Retorne una lista de tuplas que asocien las columnas 0 y 1. Cada tupla
@@ -25,3 +28,23 @@ def pregunta_07():
      (9, ['A', 'B', 'E', 'A', 'A', 'C'])]
 
     """
+
+    lines = []
+    with open ("files/input/data.csv", "r", encoding="utf-8") as f:
+        for line in f:
+            lines.append(line)
+    
+    columns = list(map(lambda line: line.split('\t'), lines))
+    column1_2 = list(map(lambda column: (column[0], int(column[1])), columns))
+    column1_2.sort(key = lambda x: x[1])
+    
+    resultado = []
+    for letra, valor in column1_2:
+        if resultado and resultado[-1][0] == valor : 
+            resultado[-1][1].append(letra)
+        else:
+            resultado.append((valor, list(letra) ))
+    
+    return resultado
+
+pregunta_07()
