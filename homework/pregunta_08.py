@@ -6,6 +6,9 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from pprint import pprint
+
+
 def pregunta_08():
     """
     Genere una lista de tuplas, donde el primer elemento de cada tupla
@@ -27,3 +30,25 @@ def pregunta_08():
      (9, ['A', 'B', 'C', 'E'])]
 
     """
+
+    lines = []
+    with open ("files/input/data.csv", "r", encoding="utf-8") as f:
+        for line in f:
+            lines.append(line)
+    
+    columns = list(map(lambda line: line.split('\t'), lines))
+    column1_2 = list(map(lambda column: (column[0], int(column[1])), columns))
+    column1_2.sort(key = lambda x: x[1])
+    
+    resultado = []
+    for letra, valor in column1_2:
+        if resultado and resultado[-1][0] == valor :
+            resultado[-1][1].append(letra)
+        else:
+            resultado.append((valor, list(letra) ))
+    
+    resultado_sin_repes = list(map(lambda x: (x[0], sorted(list(set(x[1])))), resultado))
+
+    return resultado_sin_repes
+
+pregunta_08()
