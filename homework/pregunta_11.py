@@ -6,6 +6,9 @@ utilizar pandas, numpy o scipy.
 """
 
 
+from pprint import pprint
+
+
 def pregunta_11():
     """
     Retorne un diccionario que contengan la suma de la columna 2 para cada
@@ -16,3 +19,27 @@ def pregunta_11():
 
 
     """
+   
+    lines = []
+    with open ("files/input/data.csv", "r", encoding="utf-8") as f:
+        for line in f:
+            lines.append(line)
+    
+    columns = list(map(lambda line: line.split('\t'), lines))
+    columns2_4 = list(map(lambda column: (column[3].split(','), int(column[1])), columns))
+    
+    sequence = []
+    for tuple in columns2_4:
+        for letter in tuple[0]:
+            sequence.append((letter, tuple[1]))
+    
+    dict = {}
+    for letter, value in sequence:
+        if letter not in dict:
+            dict[letter] = value
+            continue
+        dict[letter] += value
+
+    return dict
+
+pregunta_11()
